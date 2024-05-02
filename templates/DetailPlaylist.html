@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Playlist Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: darkgreen;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .playlist-info {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .song-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #555;
+        }
+
+        .action-button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: darkgreen;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: darkgreen;
+        }
+
+        /* Style for Popup and Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .popup-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .popup-container h3 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .popup-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .popup-container select,
+        .popup-container input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .popup-container input[type="submit"] {
+            background-color: darkgreen;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .popup-container input[type="submit"]:hover {
+            background-color: darkgreen;
+        }
+
+        .logout-link {
+            font-weight: bold;
+        }
+
+        .search-bar {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-brand">Marmut</div>
+        <input type="text" class="search-bar" placeholder="Search">
+        <nav>
+            <a href="">Dashboard</a>
+            <a href="">Chart</a>
+            <a href="">Playlist</a>
+            <a href="">Downloaded Songs</a>
+            <a href="" class="logout-link">Logout</a>
+            
+        </nav>
+    </div>
+
+    <div style="text-align: center; padding: 20px;">
+        <h2>User Playlist Detail</h2>
+        <div style="text-align:left" class="playlist-info">
+            <p><strong>Judul:</strong> Kdrama OST</p>
+            <p><strong>Pembuat:</strong> UserSpotify</p>
+            <p><strong>Jumlah Lagu:</strong> 1</p>
+            <p><strong>Total Durasi:</strong> 4 menit 30 detik</p>
+            <p><strong>Tanggal Dibuat:</strong> 26/04/24</p>
+            <p><strong>Deskripsi:</strong> Rekindle your innermost authentic Kdrama feels.</p>
+        </div>
+        <div>
+            <a class="action-button" href="#">Shuffle Play</a>
+            <a class="action-button" href="UserPlaylist.html">Kembali</a>
+        </div>
+        <h3>DAFTAR LAGU</h3>
+        <table class="song-table">
+            <thead>
+                <tr>
+                    <th>Judul Lagu</th>
+                    <th>Oleh</th>
+                    <th>Durasi</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>If It is You</td>
+                    <td>Jung Seung Hwan</td>
+                    <td>4 menit 30 detik</td>
+                    <td>
+                        <a class="action-button" href="SongDetail.html">Lihat</a>
+                        <a class="action-button" href="#">Play</a>
+                        <a class="action-button" href="#" onclick="deleteSong(event)">Hapus</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <a class="action-button" href="#" onclick="showAddSongForm()">Tambah Lagu</a>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="add-song-overlay">
+        <div class="popup-container">
+            <h3>Tambah Lagu</h3>
+            <form onsubmit="addSong(event)">
+                <label for="song">Lagu:</label><br>
+                <select id="song">
+                    <option value="song1">Pass The Nirvana - Pierce The Veil</option>
+                    <option value="song2">yes, and? - Ariana Grande</option>
+                    <option value="song1">7 Rings - Ariana Grande</option>
+                    <option value="song1">Dive In - Pierce The Veil</option>
+                    <option value="song1">ENVY - coldrain</option>
+                </select><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showAddSongForm() {
+            document.getElementById('add-song-overlay').style.display = 'flex';
+        }
+
+        function addSong(event) {
+            event.preventDefault();
+            var songSelect = document.getElementById('song');
+            var selectedSong = songSelect.options[songSelect.selectedIndex].text;
+            var tbody = document.querySelector('.song-table tbody');
+
+            // Split judul lagu dan nama artis
+            var parts = selectedSong.split(' - ');
+            var judulLagu = parts[0];
+            var namaArtis = parts[1];
+
+            // Buat elemen baris baru
+            var newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${judulLagu}</td>
+                <td>${namaArtis}</td>
+                <td>3 menit</td>
+                <td>
+                    <a class="action-button" href="SongDetail.html">Lihat</a>
+                    <a class="action-button" href="#">Play</a>
+                    <a class="action-button" href="#" onclick="deleteSong(event)">Hapus</a>
+                </td>
+            `;
+
+            // Tambahkan baris ke dalam tabel
+            tbody.appendChild(newRow);
+
+            // Sembunyikan form setelah ditambahkan
+            document.getElementById('add-song-overlay').style.display = 'none';
+        }
+
+        function deleteSong(event) {
+            event.preventDefault();
+            var row = event.target.parentNode.parentNode;
+            var table = row.parentNode;
+            table.removeChild(row);
+        }
+    </script>
+</body>
+</html>

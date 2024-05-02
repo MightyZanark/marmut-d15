@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: darkgreen;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .song-info {
+            max-width: 600px;
+            margin: 0 auto 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #ffffff;
+            text-align: left;
+        }
+
+        .song-info p {
+            margin: 5px 0;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .action-buttons a {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: darkgreen;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .action-buttons a:hover {
+            background-color: darkgreen;
+        }
+
+        .progress-slider {
+            width: 70%;
+            margin-bottom: 20px;
+        }
+
+        .progress-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Popup Form Style */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .popup-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .popup-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .popup-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .popup-container select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+
+        .popup-container button {
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: darkgreen;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-sizing: border-box;
+            margin-right: 10px;
+            width: 150px; /* Lebar tombol diubah */
+        }
+
+        .popup-container button.cancel-button {
+            background-color: darkgreen;
+        }
+
+        .popup-container button:hover {
+            background-color: darkgreen;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .logout-link {
+            font-weight: bold;
+        }
+
+        .search-bar {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-brand">Marmut</div>
+        <input type="text" class="search-bar" placeholder="Search">
+        <nav>
+            <a href="">Dashboard</a>
+            <a href="">Chart</a>
+            <a href="">Playlist</a>
+            <a href="">Downloaded Songs</a>
+            <a href="" class="logout-link">Logout</a>
+            
+        </nav>
+    </div>
+
+    <div class="container">
+        <h2>Song Detail</h2>
+        <div class="song-info">
+            <p><strong>Judul:</strong> Every moment of you</p>
+            <p><strong>Genre(s):</strong></p>
+            <ul>
+                <li>Ballad</li>
+                <li>Pop</li>
+            </ul>
+            <p><strong>Artist:</strong> Sung Si Kyung</p>
+            <p><strong>Songwriter(s):</strong></p>
+            <ul>
+                <li>Sung Si Kyung</li>
+            </ul>
+            <p><strong>Tanggal Rilis:</strong> 14/03/16</p>
+            <p><strong>Tahun:</strong> 2016</p>
+            <p><strong>Total Play:</strong> 321313</p>
+            <p><strong>Total Downloads:</strong> 5423</p>
+            <p><strong>Album:</strong> My Love from The Star Part 7</p>
+        </div>
+
+        <div class="progress-container">
+            <h3>Progress</h3>
+            <span class="progress-label">0%</span>
+            <input class="progress-slider" type="range" min="0" max="100" value="0" step="1" onchange="updateProgress(this.value)">
+        </div>
+
+        <div class="action-buttons">
+            <a href="#" class="action-button">Play</a>
+            <a href="#" class="action-button" onclick="showAddToPlaylistForm()">Add to Playlist</a>
+            <a href="#" class="action-button" onclick="showAddDownloadSong()">Download</a>
+            <a class="action-button" href="DetailPlaylist.html">Kembali</a>
+        </div>
+    </div>
+
+    <!-- Popup Form Tambah Lagu ke Playlist -->
+    <div class="popup-overlay" id="add-to-playlist-overlay">
+        <div class="popup-container">
+            <h2>Add Song to Playlist</h2>
+            <form id="addSongToPlaylistForm" onsubmit="addSongToPlaylist(event)">
+                <div class="select-container">
+                    <p><strong>Judul: </strong>Every moment of you</p>
+                    <p><strong>Artist: </strong>Sung Si Kyung</p>
+                    <label for="playlist">Playlist:</label><br>
+                    <select id="playlist" name="playlist" required>
+                        <option value="" disabled selected>Pilih playlist</option>
+                        <option value="Kdrama OST">Kdrama OST</option>
+                        <option value="Harmony House">Harmony House</option>
+                        <option value="People In Motion">People In Motion</option>
+                    </select>
+                </div>
+                <div class="button-container">
+                    <button type="button" onclick="addSongToPlaylist(event)">Tambah</button>
+                    <button type="button" class="cancel-button" onclick="hideAddToPlaylistForm()">Kembali</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+     <!-- Popup Berhasil Tambah Lagu ke Playlist -->
+    <div class="popup-overlay" id="add-success-overlay">
+        <div class="popup-container">
+            <h2>Berhasil menambahkan Lagu dengan judul <span id="added-song-title"></span> ke <span id="added-to-playlist"></span>!</h2>
+            <div class="action-buttons">
+                <a class="action-button" href="DetailPlaylist.html">Ke Playlist</a>
+                <button onclick="hideAddSuccessOverlay(overlayId)">Kembali</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Download Lagu -->
+    <div class="popup-overlay" id="add-success-overlay-download">
+        <div class="popup-container">
+            <h2>Berhasil mengunduh Lagu dengan judul <span id="added-song-title"></span></h2>
+            <div class="action-buttons">
+                <a class="action-button" href="DownloadList.html">Ke Daftar Download</a>
+                <button onclick="hideAddSuccessOverlay(overlayId)">Kembali</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateProgress(value) {
+            document.querySelector('.progress-label').innerText = value + "%";
+        }
+
+        function showAddToPlaylistForm() {
+            document.getElementById('add-to-playlist-overlay').style.display = 'flex';
+        }
+
+        function hideAddToPlaylistForm() {
+            document.getElementById('add-to-playlist-overlay').style.display = 'none';
+        }
+
+        function addSongToPlaylist() {
+            event.preventDefault();
+            var playlist = document.getElementById('playlist').value;
+            var songTitle = "Every moment of you"; 
+            document.getElementById('added-song-title').innerText = songTitle;
+            document.getElementById('added-to-playlist').innerText = playlist;
+            showAddSuccessOverlay(); 
+            hideAddToPlaylistForm(); 
+        }
+
+        function showAddSuccessOverlay() {
+            document.getElementById('add-success-overlay').style.display = 'flex';
+        }
+
+        function hideAddSuccessOverlay() {
+            document.getElementById(overlayId).style.display = 'none';
+        }
+
+        function showAddDownloadSong() {
+            document.getElementById('add-success-overlay-download').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

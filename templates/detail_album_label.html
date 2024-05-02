@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .table-container {
+            margin: 40px 0 10px 10px;
+        }
+
+        button {
+            display: block;
+            margin: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="table-container">
+            <h2>Daftar Lagu pada Album Reincarnation</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Judul</th>
+                        <th>Durasi</th>
+                        <th>Total Play</th>
+                        <th>Total Download</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Classical Reverie</td>
+                        <td>3 menit</td>
+                        <td>217</td>
+                        <td>98</td>
+                        <td>
+                            <button>Lihat Detail</button>
+                            <button>Hapus</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Southern Serenade</td>
+                        <td>4 menit</td>
+                        <td>135</td>
+                        <td>87</td>
+                        <td>
+                            <button>Lihat Detail</button>
+                            <button>Hapus</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

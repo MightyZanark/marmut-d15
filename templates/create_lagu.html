@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Album</title>
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        input {
+            margin-bottom: 30px;
+        }
+
+        select {
+            display: block;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create Lagu</h2>
+        <p>Album: Reincarnation</p>
+        <form>
+            <label for="judul">Judul: </label>
+            <input type="text" name="judul" />
+            <br>
+            <label for="artist">Artist: </label>
+            <select style="margin-top: 5px; margin-bottom: 20px;">
+                <option>Jessica Puspita</option>
+                <option>Luwes Hutapea</option>
+            </select>
+            <br>
+            <label>Songwriter: </label>
+            <input type="checkbox" name="songwriter1">
+            <label for="songwriter1"> Rafid Najmudin</label>
+            <input type="checkbox" name="songwriter2">
+            <label for="songwriter2"> Karen Haryanti</label>
+            <input type="checkbox" name="songwriter3">
+            <label for="songwriter3"> Ian Prasetyo</label>
+            <br>
+            <label>Genre: </label>
+            <input type="checkbox" name="genre1">
+            <label for="genre1"> Comedy</label>
+            <input type="checkbox" name="genre2">
+            <label for="genre2"> History</label>
+            <input type="checkbox" name="genre3">
+            <label for="genre3"> Blues</label>
+            <br>
+            <label for="durasi">Durasi: </label>
+            <input type="text" name="durasi" />
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>

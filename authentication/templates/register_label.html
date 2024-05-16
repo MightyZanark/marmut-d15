@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Register Label</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="m-3">
+    <div>
+        <h1>Register Label</h1>
+    </div>
+    <br>
+    <form method="POST" action="" class="form">
+        {% csrf_token %}
+        <label for="email">Email: </label>
+        <input type="email" name="email" required />
+        <br><br>
+        <label for="password">Password: </label>
+        <input type="password" name="password" required />
+        <br><br>
+        <label for="nama">Nama: </label>
+        <input type="text" name="nama" required />
+        <br><br>
+        <label for="kontak">Kontak: </label>
+        <input type="text" name="kontak" required />
+        <br><br>
+        <input type="submit" value="Register">
+    </form>
+
+    {% if messages %}
+        <ul class="mx-auto list-group list-group-flush">
+            {% for message in messages %}
+                <li class=" w-50 list-group-item list-group-item-danger">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock content %}

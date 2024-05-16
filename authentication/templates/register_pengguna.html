@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Register Pengguna</title>
+{% endblock meta %}
+
+{% block content %}
+<div>
+    <div>
+        <h1>Register Pengguna</h1>
+    </div>
+    <br>
+    <form method="POST" action="" class="form">
+        {% csrf_token %}
+        <label for="email">Email: </label>
+        <input type="email" name="email" required />
+        <br><br>
+        <label for="password">Password: </label>
+        <input type="password" name="password" required />
+        <br><br>
+        <label for="nama">Nama: </label>
+        <input type="text" name="nama" required />
+        <br><br>
+        <label for="gender">Gender: </label>
+        <select name="gender" required >
+            <option value="0">Perempuan</option>
+            <option value="1">Laki-laki</option>
+        </select>
+        <br><br>
+        <label for="tempat_lahir">Tempat lahir: </label>
+        <input type="text" name="tempat_lahir" required />
+        <br><br>
+        <label for="tanggal_lahir">Tanggal lahir: </label>
+        <input type="date" name="tanggal_lahir" required />
+        <br><br>
+        <label for="kota_asal">Kota asal: </label>
+        <input type="text" name="kota_asal" required />
+        <br><br>
+        <label>Role: </label><br>
+        <input type="checkbox" name="podcaster" value="podcaster">
+        <label for="podcaster">Podcaster</label><br>
+        <input type="checkbox" name="artist" value="artist">
+        <label for="artist">Artist</label><br>
+        <input type="checkbox" name="songwriter" value="songwriter">
+        <label for="songwriter">Songwriter</label><br>
+        <br>
+        <input type="submit" value="Register">
+    </form>
+
+    <br>
+
+    {% if messages %}
+        <ul class="mx-auto list-group list-group-flush">
+            {% for message in messages %}
+                <li class=" w-50 list-group-item list-group-item-danger">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock content %}

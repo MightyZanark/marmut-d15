@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Register</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="m-3">
+    <div>
+        <h1>Register</h1>
+    </div>
+    <br>
+    <div>
+        <a href="{% url 'authentication:register_pengguna' %}"><button>Pengguna</button></a>
+        <br><br>
+        <a href="{% url 'authentication:register_label' %}"><button>Label</button></a>
+    </div>
+</div>
+{% endblock content %}

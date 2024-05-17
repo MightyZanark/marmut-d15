@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Play {{ podcast }}</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="m-3">
+    <div>
+        <h1>Podcast Detail</h1>
+    </div>
+    <br>
+    <div>
+        <p>Judul: {{ podcast }}</p>
+        <p>Genre(s):
+            <ul>
+                {% for genre in genres %}
+                    <li>{{ genre }}</li>
+                {% endfor %}
+            </ul>
+        </p>
+        <p>Podcaster: {{ podcaster }}</p>
+        <p>Total Durasi: {{ duration }}</p>
+        <p>Tanggal Rilis: {{ tanggal_rilis }}</p>
+        <p>Tahun: {{ tahun }}</p>
+        <button>Kembali</button>
+    </div>
+    <hr>
+    <div>
+        <h2>Daftar Episode</h2>
+    </div>
+    <table class="table table-bordered">
+        <tr>
+            <th>Judul Episode</th>
+            <th>Deskripsi</th>
+            <th>Durasi</th>
+            <th>Tanggal</th>
+        </tr>
+        {% for episode in episodes %}
+            <tr>
+                <td>{{ episode.0 }}</td>
+                <td>{{ episode.1 }}</td>
+                <td>{{ episode.2 }}</td>
+                <td>{{ episode.3 }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

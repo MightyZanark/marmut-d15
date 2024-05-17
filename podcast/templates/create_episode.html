@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Create Episode</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="m-3">
+    <div>
+        <h1>Create Episode</h1>
+    </div>
+    <br>
+    <form method="POST" action="" class="form">
+        {% csrf_token %}
+        <label for="podcast">Podcast: </label>
+        <input type="text" name="podcast" value="{{ podcast }}" disabled />
+        <br><br>
+        <label for="judul">Judul: </label>
+        <input type="text" name="judul" required>
+        <br><br>
+        <label for="deskripsi">Deskripsi: </label>
+        <textarea name="deskripsi" required></textarea>
+        <br><br>
+        <label for="durasi">Durasi: </label>
+        <input type="number" min="1" value="1" name="durasi" required />
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+{% endblock content %}

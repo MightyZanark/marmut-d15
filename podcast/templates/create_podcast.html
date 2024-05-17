@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Create Podcast</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="m-3">
+    <div>
+        <h1>Create Podcast</h1>
+    </div>
+    <br>
+    <form method="POST" action="" class="form">
+        {% csrf_token %}
+        <label for="judul">Judul: </label>
+        <input type="text" name="judul" required />
+        <br><br>
+        <label>Genre: </label><br>
+        <input type="checkbox" name="business" value="business">
+        <label for="business">Business</label><br>
+        <input type="checkbox" name="comedy" value="comedy">
+        <label for="comedy">Comedy</label><br>
+        <input type="checkbox" name="sports" value="sports">
+        <label for="sports">Sports</label><br>
+        <input type="checkbox" name="news" value="news">
+        <label for="news">News</label><br>
+        <input type="checkbox" name="history" value="history">
+        <label for="history">History</label><br>
+        <input type="checkbox" name="fiction" value="fiction">
+        <label for="fiction">Fiction</label><br>
+        <input type="checkbox" name="music" value="music">
+        <label for="music">Music</label><br>
+        <br><br>
+        <input type="submit" value="Submit">
+
+        {% if messages %}
+        <ul class="mx-auto list-group list-group-flush">
+            {% for message in messages %}
+                <li class=" w-50 list-group-item list-group-item-danger">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </form>
+</div>
+{% endblock content %}

@@ -13,11 +13,64 @@ Dashboard
                 <div class="card-body">
                     <h5 class="card-title">Profile</h5>
 
+                    Nama: {{user.user_info.nama}} <br>
+                    Email: {{user.user_info.email}} <br>
+                    Status Langganan: {{user.user_info.prem}} <br>
+                    {% comment %} Kontak: {% endcomment %}
+                    Kota Asal: {{user.user_info.kota}} <br>
+                    Gender: {{user.user_info.gender}} <br>
+                    Tempat Lahir: {{user.user_info.tempat}} <br>
+                    Tanggal: {{user.user_info.tanggal}} <br>
+                    Role: {{user.user_info.role}} <br>
+
                     <form method="POST" action="{% url 'authentication:logout' %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger btn-block mt-3">Logout</button>
                     </form>
                 </div>
+            </div>
+
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
+        
+                .table-container {
+                    margin: 40px 0 10px 10px;
+                }
+            </style>
+
+            <div class="table-container">
+                <h2>Daftar Playlist</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Judul</th>
+                            <th>Deskripsi</th>
+                            <th>Total Lagu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for playlist in user.playlist %}
+                        <tr>
+                            <td>1</td>
+                            <td>{{playlist.judul}}</td>
+                            <td>{{playlist.desc}}</td>
+                            <td>{{playlist.jml_lagu}}</td>
+                        <tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

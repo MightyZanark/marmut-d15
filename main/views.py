@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 
+from .utils import akun_dashboard, get_akun_playlist
+
 # Create your views here.
 
 def dashboard(request):
@@ -8,7 +10,27 @@ def dashboard(request):
     if user_email is None:
         return redirect('authentication:login')
     else:
-        return render(request, 'dashboard.html', {'user_email': user_email, 'user_type': user_type})
+
+        user_info = akun_dashboard(user_email)
+        playlist = get_akun_playlist(user_email)
+
+        context = {
+            "user_info": user_info,
+            "playlist": playlist
+        }
+
+        # email, pw, nama, gender, tempat, tanggal, iv, kota = data
+
+        # context = {
+        #     "email": email,
+        #     "nama": nama,
+        #     "gender": gender,
+        #     "tempat": tempat,
+        #     "tanggal": tanggal,
+        #     "kota": kota
+        # }
+
+        return render(request, 'dashboard.html', {"user": context})
     
 def homepage(request):
     return render(request, 'homepage.html')

@@ -37,7 +37,8 @@ def get_episodes(podcast_id: str):
     with connection.cursor() as cursor:
         cursor.execute(
             "SELECT judul, deskripsi, durasi, tanggal_rilis, id_episode "
-            "FROM episode WHERE id_konten_podcast = %s",
+            "FROM episode WHERE id_konten_podcast = %s"
+            "ORDER BY tanggal_rilis",
             [podcast_id]
         )
         return cursor.fetchall()

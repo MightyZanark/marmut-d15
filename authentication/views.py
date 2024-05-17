@@ -103,7 +103,8 @@ def login(request):
             if user is not None:
                 request.session['user_email'] = user[0]
                 request.session['user_type'] = determine_user_type(email, cursor)
-                return redirect('authentication:dashboard')
+                print("test")
+                return redirect('main:dashboard')
             else:
                 messages.error(request, 'Email or password is incorrect!')
                 return redirect('authentication:login')
@@ -116,15 +117,5 @@ def logout(request):
         del request.session['user_email']
     except KeyError:
         pass
-    return redirect('authentication:homepage')
+    return redirect('main:homepage')
 
-def dashboard(request):
-    user_email = request.session.get('user_email') 
-    user_type = request.session.get('user_type')
-    if user_email is None:
-        return redirect('authentication:login')
-    else:
-        return render(request, 'dashboard.html', {'user_email': user_email, 'user_type': user_type})
-    
-def homepage(request):
-    return render(request, 'homepage.html')

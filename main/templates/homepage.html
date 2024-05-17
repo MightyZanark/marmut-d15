@@ -75,17 +75,6 @@ Homepage
     }
 </style>
 
-<div class="navbar">
-    <div class="navbar-brand">Marmut</div>
-    <input type="text" class="search-bar" placeholder="Search">
-    <nav>
-        {% if not user_email %}
-            <a href="{% url 'authentication:register_page' %}">Register</a>
-            <a href="{% url 'authentication:login' %}">Login</a>
-        {% endif %}       
-    </nav>
-</div>
-
 <div class="centered-container">
     <div class="centered-text">
         Marmut - D15

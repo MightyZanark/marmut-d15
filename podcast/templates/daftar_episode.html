@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Episodes of {{ podcast }}</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="m-3">
+    <div>
+        <h1>Daftar Episode pada {{ podcast }}</h1>
+    </div>
+    <br>
+    <table class="table table-bordered">
+        <tr>
+            <th>Judul Episode</th>
+            <th>Deskripsi</th>
+            <th>Durasi</th>
+            <th>Tanggal</th>
+            <th>Action</th>
+        </tr>
+        {% for episode in episodes %}
+            <tr>
+                <td>{{ episode.0 }}</td>
+                <td>{{ episode.1 }}</td>
+                <td>{{ episode.2 }}</td>
+                <td>{{ episode.3 }}</td>
+                <td><a href="{% url 'podcast:delete_episode' episode_id=episode.4 podcast_id=podcast_id %}"><button>Hapus</button></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{% url 'podcast:list_podcast' %}"><button>Kembali</button></a>
+</div>
+{% endblock content %}

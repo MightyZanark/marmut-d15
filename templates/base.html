@@ -2,18 +2,114 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+J4jsl5c9zdLKaUk5Ae5f5b1bw6AUn5f5v8FZJoMxm6f5cH1" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>    
-        {% block meta %}
-        {% endblock meta %}
-    </head>
-    <body>
-        {% block content %}
-        {% endblock content %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+J4jsl5c9zdLKaUk5Ae5f5b1bw6AUn5f5v8FZJoMxm6f5cH1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>    
+    {% block meta %}
+    {% endblock meta %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .navbar {
+            background-color: darkgreen;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            color: #fff;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .search-bar {
+            margin-left: 20px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .centered-container {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .centered-text {
+            font-size: 36px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-brand">Marmut</div>
+        <nav>
+            {% if user_email %}
+                <a href="">Dashboard</a>
+
+                {% if user_type.is_podcaster or user_type.is_artist or user_type.is_songwriter or user_type.is_non_premium %}
+                    <a href="">Chart</a>
+                    <a href="">Playlist</a>
+                    <a href="">Subscribe</a>
+                {% endif %}
+
+                {% if user_type.is_premium %}
+                    <a href="">Downloaded Song</a>
+                {% endif %}
+
+                {% if user_type.is_podcaster %}
+                    <a href="">Podcast</a>
+                {% endif %}
+
+                {% if user_type.is_artist or user_type.is_songwriter %}
+                    <a href="">Album & Songs</a>
+                {% endif %}
+
+                {% if user_type.is_label %}
+                    <a href="">Album</a>
+                {% endif %}
+
+                {% if user_type.is_artist or user_type.is_songwriter or user_type.is_label %}
+                    <a href="">Royalty</a>
+                {% endif %}
+
+                <a href="{% url 'authentication:logout' %}">Logout</a>
+
+            {% else %}
+                <a href="{% url 'authentication:login' %}">Login</a>
+                <a href="{% url 'authentication:register_page' %}">Register</a>
+
+            {% endif %}
+        </nav>
+    </div>
+    {% block content %}
+    {% endblock content %}
+</body>
 </html>

@@ -16,5 +16,6 @@ def chart_detail(request: HttpRequest, chart_id: str):
 
     return render(request, 'chart_detail.html', ctx)
 
+
 def user_playlist(request):
     return render(request, 'userPlaylist.html')

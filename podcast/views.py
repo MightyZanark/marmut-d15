@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 
 from podcast.utils import get_podcast, get_podcaster, get_genres, get_episodes, \
-                            format_duration, is_podcaster, create_podcast_db, \
+                            format_duration, create_podcast_db, \
                             create_episode_db, get_podcast_by_podcaster, \
                             delete_episode_db, delete_podcast_db
 
@@ -40,8 +40,8 @@ def play_podcast(request: HttpRequest, podcast_id: str):
 
 
 def create_podcast(request: HttpRequest):
-    podcaster = request.COOKIES.get('id', None)
-    if not podcaster or not is_podcaster(podcaster):
+    is_podcaster = request.session.get('user_type')['is_podcaster']
+    if not request.session.get('user_email', None) or not is_podcaster:
         return HttpResponseForbidden("You are not a podcaster")
 
     if request.method == 'POST':
@@ -61,15 +61,15 @@ def create_podcast(request: HttpRequest):
             return render(request, 'create_podcast.html', {})
         
         genres = ' '.join(genres).split() # Remove empty genre
-        create_podcast_db(judul, genres, podcaster)
+        create_podcast_db(judul, genres, request.session.get('user_email'))
         return redirect(reverse('podcast:list_podcast'))
 
     return render(request, 'create_podcast.html', {})
 
 
 def create_episode(request: HttpRequest, podcast_id: str):
-    podcaster = request.COOKIES.get('id', None)
-    if not podcaster or not is_podcaster(podcaster):
+    is_podcaster = request.session.get('user_type')['is_podcaster']
+    if not request.session.get('user_email', None) or not is_podcaster:
         return HttpResponseForbidden("You are not a podcaster")
     
     if request.method == 'POST':
@@ -86,11 +86,11 @@ def create_episode(request: HttpRequest, podcast_id: str):
 
 
 def list_podcast(request: HttpRequest):
-    podcaster = request.COOKIES.get('id', None)
-    if not podcaster or not is_podcaster(podcaster):
+    is_podcaster = request.session.get('user_type')['is_podcaster']
+    if not request.session.get('user_email', None) or not is_podcaster:
         return HttpResponseForbidden("You are not a podcaster")
     
-    podcasts = get_podcast_by_podcaster(podcaster)
+    podcasts = get_podcast_by_podcaster(request.session.get('user_email'))
     for i in range(len(podcasts)):
         data = [*podcasts[i]]
         data[3] = format_duration(data[3])
@@ -100,8 +100,8 @@ def list_podcast(request: HttpRequest):
 
 
 def list_episodes(request: HttpRequest, podcast_id: str):
-    podcaster = request.COOKIES.get('id', None)
-    if not podcaster or not is_podcaster(podcaster):
+    is_podcaster = request.session.get('user_type')['is_podcaster']
+    if not request.session.get('user_email', None) or not is_podcaster:
         return HttpResponseForbidden("You are not a podcaster")
     
     episodes = get_episodes(podcast_id)
@@ -122,8 +122,8 @@ def list_episodes(request: HttpRequest, podcast_id: str):
 
 
 def delete_podcast(request: HttpRequest, podcast_id: str):
-    podcaster = request.COOKIES.get('id', None)
-    if not podcaster or not is_podcaster(podcaster):
+    is_podcaster = request.session.get('user_type')['is_podcaster']
+    if not request.session.get('user_email', None) or not is_podcaster:
         return HttpResponseForbidden("You are not a podcaster")
     
     delete_podcast_db(podcast_id)
@@ -132,8 +132,8 @@ def delete_podcast(request: HttpRequest, podcast_id: str):
 
 
 def delete_episode(request: HttpRequest, podcast_id: str, episode_id: str):
-    podcaster = request.COOKIES.get('id', None)
-    if not podcaster or not is_podcaster(podcaster):
+    is_podcaster = request.session.get('user_type')['is_podcaster']
+    if not request.session.get('user_email', None) or not is_podcaster:
         return HttpResponseForbidden("You are not a podcaster")
     
     delete_episode_db(episode_id)

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Hapus Playlist
+{% endblock %}
+
+{% block content %}
+<style>
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #555;
+    }
+
+    .action-button {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 5px;
+        background-color: darkgreen;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        font-size: 14px;
+    }
+
+    .action-button:hover {
+        background-color: #005700;
+    }
+
+    .playlist-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+</style>
+
+<div style="text-align: center; padding: 20px;">
+    <h2>Hapus Playlist</h2>
+    <div id="playlist-info">
+        <p>Apakah Anda yakin ingin menghapus playlist "{{ playlist.judul }}"?</p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="playlist-button action-button">Hapus Playlist</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

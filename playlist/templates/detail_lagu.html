@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        text-align: center;
+        padding: 20px;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    .song-info {
+        max-width: 600px;
+        margin: 0 auto 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #ffffff;
+        text-align: left;
+    }
+
+    .song-info p {
+        margin: 5px 0;
+    }
+
+    .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .action-buttons a {
+        padding: 10px 20px;
+        margin: 0 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: darkgreen;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .action-buttons a:hover {
+        background-color: darkgreen;
+    }
+
+    .progress-slider {
+        width: 70%;
+        margin-bottom: 20px;
+    }
+
+    .progress-label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+</style>
+
+
+<div class="container">
+    <h2>Song Detail</h2>
+    <div class="song-info">
+        <p>Judul: {{ song.judul }}</p>
+        <p>Genre(s): {% for genre in song.genres %}-{{ genre }} {% endfor %}</p>
+        <p>Artist: {{ song.artist }}</p>
+        <p>Songwriter(s): {% for songwriter in song.songwriters %}-{{ songwriter }} {% endfor %}</p>
+        <p>Durasi: {{ song.durasi }} menit</p>
+        <p>Tanggal Rilis: {{ song.tanggal_rilis }}</p>
+        <p>Tahun: {{ song.tahun }}</p>
+        <p>Total Play: {{ song.total_play }}</p>
+        <p>Album: {{ song.album }}</p>
+    </div>
+
+    <form method="POST" action="{% url 'detail_lagu' song.id_song %}">
+        {% csrf_token %}
+        <input type="range" class="slider" id="progressSlider" name="progress" min="0" max="100" value="0">
+        <button type="submit" class="btn btn-primary" id="playButton">Play</button>
+    </form>                    
+    <a href="" class="btn btn-secondary">Add to Playlist</a>
+</div>
+
+{% endblock %}
+    
+

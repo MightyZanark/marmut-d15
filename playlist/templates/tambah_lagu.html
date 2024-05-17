@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Tambah Lagu
+{% endblock %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 400px;
+        margin: 100px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .btn-custom {
+        background-color: darkgreen;
+        color: #fff;
+    }
+
+    .btn-center {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <h2>Tambah Lagu</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="song">Song:</label>
+            <select class="form-control" id="song" name="song">
+                {% for song in songs %}
+                    <option value="{{ song.id_konten }}">{{ song.judul }} - {{ song.artist }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="btn-center">
+            <button type="submit" class="btn btn-custom btn-block">Submit</button>
+        </div>
+    </form>
+    {% if error %}
+        <p class="text-danger">{{ error }}</p>
+    {% endif %}
+</div>
+{% endblock %}

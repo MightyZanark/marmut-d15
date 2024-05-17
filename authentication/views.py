@@ -103,7 +103,6 @@ def login(request):
             if user is not None:
                 request.session['user_email'] = user[0]
                 request.session['user_type'] = determine_user_type(email, cursor)
-                print("test")
                 return redirect('main:dashboard')
             else:
                 messages.error(request, 'Email or password is incorrect!')

@@ -43,13 +43,6 @@
             margin: 0;
         }
 
-        .search-bar {
-            margin-left: 20px;
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
         nav a {
             color: #fff;
             text-decoration: none;
@@ -76,7 +69,7 @@
 
                 {% if user_type.is_podcaster or user_type.is_artist or user_type.is_songwriter or user_type.is_non_premium %}
                     <a href="">Chart</a>
-                    <a href="">Playlist</a>
+                    <a href="{% url 'playlist:playlist' %}">Playlist</a>
                     <a href="">Subscribe</a>
                 {% endif %}
 
@@ -85,7 +78,7 @@
                 {% endif %}
 
                 {% if user_type.is_podcaster %}
-                    <a href="">Podcast</a>
+                    <a href="{% url 'podcast:list_podcast' %}">Podcast</a>
                 {% endif %}
 
                 {% if user_type.is_artist or user_type.is_songwriter %}

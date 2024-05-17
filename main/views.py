@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 
-from .utils import akun_dashboard, get_akun_playlist
+from .utils import akun_dashboard, get_akun_lagu, get_akun_playlist, get_akun_podcast
 
 # Create your views here.
 
@@ -16,19 +16,29 @@ def dashboard(request):
 
         context = {
             "user_info": user_info,
+            "user_type": {
+                "is_songwriter": user_type.get("is_songwriter"),
+                "is_podcaster": user_type.get("is_podcaster")
+            },
             "playlist": playlist
         }
 
-        # email, pw, nama, gender, tempat, tanggal, iv, kota = data
+        if user_type.get("is_podcaster"):
+            podcast = {
+                "podcast": get_akun_podcast(user_email)
+            }
+            
+            context = {**context, **podcast}
 
-        # context = {
-        #     "email": email,
-        #     "nama": nama,
-        #     "gender": gender,
-        #     "tempat": tempat,
-        #     "tanggal": tanggal,
-        #     "kota": kota
-        # }
+        if user_type.get("is_songwriter") or user_type.get("is_artist"):
+            lagu = {
+                "lagu": get_akun_lagu(user_email)
+            }
+            
+            context = {**context, **lagu}
+
+        if user_type.get("is_label"):
+            pass
 
         return render(request, 'dashboard.html', {"user": context})
     

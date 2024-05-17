@@ -54,7 +54,6 @@ Dashboard
                 <table>
                     <thead>
                         <tr>
-                            <th>No</th>
                             <th>Judul</th>
                             <th>Deskripsi</th>
                             <th>Total Lagu</th>
@@ -63,7 +62,6 @@ Dashboard
                     <tbody>
                         {% for playlist in user.playlist %}
                         <tr>
-                            <td>1</td>
                             <td>{{playlist.judul}}</td>
                             <td>{{playlist.desc}}</td>
                             <td>{{playlist.jml_lagu}}</td>
@@ -72,6 +70,59 @@ Dashboard
                     </tbody>
                 </table>
             </div>
+            <br>
+
+            {% if user.user_type.is_songwriter %}
+            <div class="table-container">
+                <h2>Daftar Lagu</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Judul</th>
+                            <th>Tanggal Rilis</th>
+                            <th>Durasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lagu in user.lagu %}
+                        <tr>
+                            <td>{{lagu.judul}}</td>
+                            <td>{{lagu.tanggal}}</td>
+                            <td>{{lagu.durasi}}</td>
+                        <tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            {% endif %}
+
+            {% if user.user_type.is_podcaster %}
+            <div class="table-container">
+                <h2>Daftar Poadcast</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Judul</th>
+                            <th>Tanggal Rilis</th>
+                            <th>Durasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for podcast in user.podcast %}
+                        <tr>
+                            <td>{{podcast.judul}}</td>
+                            <td>{{podcast.tanggal}}</td>
+                            <td>{{podcast.durasi}}</td>
+                        <tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            {% endif %}
+
+
         </div>
     </div>
 </div>

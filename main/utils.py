@@ -57,10 +57,60 @@ def get_akun_playlist(email): # untuk semua pengguna
         return daftar_pl
 
 def get_akun_lagu(email): # untuk artis / songwriter
-    pass
+    with connection.cursor() as cursor:
+        cursor.execute(f"select judul, tanggal_rilis, durasi from songwriter as s, songwriter_write_song as sws, konten where email_akun = '{email}' and s.id = sws.id_songwriter and sws.id_song = konten.id;")
+
+        data = cursor.fetchall()
+
+        daftar_lagu = []
+
+        for d in data:
+            judul, tanggal, durasi = d
+
+            lagu = {
+                "judul": judul,
+                "tanggal": tanggal,
+                "durasi": durasi
+            }
+            daftar_lagu.append(lagu)
+
+        cursor.execute(f"select judul, tanggal_rilis, durasi from artist, song, konten where artist.email_akun = '{email}' and artist.id = song.id_artist and song.id_konten = konten.id;")
+
+        data = cursor.fetchall()
+
+        daftar_lagu = []
+
+        for d in data:
+            judul, tanggal, durasi = d
+
+            lagu = {
+                "judul": judul,
+                "tanggal": tanggal,
+                "durasi": durasi
+            }
+            daftar_lagu.append(lagu)
+        
+    return daftar_lagu
 
 def get_akun_podcast(email): # untuk podcaster
-    pass
+    with connection.cursor() as cursor:
+        cursor.execute(f"select judul, tanggal_rilis, durasi from podcaster, podcast, konten where podcaster.email = '{email}' and podcast.email_podcaster = podcaster.email and podcast.id_konten = konten.id;")
+
+        data = cursor.fetchall()
+
+        daftar_pc = []
+
+        for d in data:
+            judul, tanggal, durasi = d
+
+            pc = {
+                "judul": judul,
+                "tanggal": tanggal,
+                "durasi": durasi
+            }
+            daftar_pc.append(pc)
+
+    return daftar_pc
 
 def get_akun_album(email):
     pass

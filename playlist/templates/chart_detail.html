@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Chart Detail</title>
+{% endblock meta %}
+
+{% block content %}
+    <div class="m-3">
+        <div>
+            <h1>Chart Detail</h1>
+        </div>
+        <br>
+        <div>
+            <p>Tipe: {{ chart_type }}</p>
+            <a href="{% url 'playlist:chart_list' %}"><button>Kembali</button></a>
+        </div>
+        <hr>
+        <div>
+            <h2>Daftar Lagu</h2>
+        </div>
+        <br>
+        <table class="table table-bordered">
+            <tr>
+                <th>Judul Lagu</th>
+                <th>Oleh</th>
+                <th>Tanggal Rilis</th>
+                <th>Total Plays</th>
+                <th>Actions</th>
+            </tr>
+            {% for song in songs %}
+                <tr>
+                    <td>{{ song.0 }}</td>
+                    <td>{{ song.1 }}</td>
+                    <td>{{ song.2 }}</td>
+                    <td>{{ song.3 }}</td>
+                    <td><a href="#"><button>Lihat</button></a></td>
+                </tr>
+            {% endfor %}
+            <!-- edit href pas song udh ada -->
+        </table>
+    </div>
+{% endblock content %}

@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from django.db import connection
 from django.shortcuts import redirect, render
 import uuid
+from playlist.utils import get_charts, get_chart_type, get_chart_song
 
 from django.urls import reverse
 
@@ -210,3 +211,20 @@ def main_lagu(request, id_song):
                 cursor.execute("UPDATE song SET total_play = total_play + 1 WHERE id_konten = %s", [id_song])
 
     return redirect(reverse('detail_lagu', args=[id_song]))
+
+
+def chart_list(request: HttpRequest):
+    charts = get_charts()
+    return render(request, 'chart_list.html', {'charts': charts})
+
+
+def chart_detail(request: HttpRequest, chart_id: str):
+    ctx = {'chart_type': get_chart_type(chart_id)}
+    ctx['songs'] = get_chart_song(chart_id)
+
+    return render(request, 'chart_detail.html', ctx)
+
+
+def user_playlist(request):
+    return render(request, 'userPlaylist.html')
+

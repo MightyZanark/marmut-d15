@@ -66,39 +66,38 @@
         <nav>
             {% if user_email %}
                 <a href="">Dashboard</a>
-
-                {% if user_type.is_podcaster or user_type.is_artist or user_type.is_songwriter or user_type.is_non_premium %}
+        
+                {% if user_type.is_non_premium or user_type.is_premium or user_type.is_artist or user_type.is_songwriter or user_type.is_podcaster %}
                     <a href="">Chart</a>
-                    <a href="{% url 'playlist:playlist' %}">Playlist</a>
-                    <a href="">Subscribe</a>
+                    <a href="">Search Bar</a>
+                    <a href="{% url 'playlist:playlist' %}">Kelola Playlist</a>
+                    <a href="">Langganan Paket</a>
                 {% endif %}
-
+        
                 {% if user_type.is_premium %}
-                    <a href="">Downloaded Song</a>
+                    <a href="">Kelola Downloaded Songs</a>
                 {% endif %}
-
+        
                 {% if user_type.is_podcaster %}
-                    <a href="{% url 'podcast:list_podcast' %}">Podcast</a>
+                    <a href="{% url 'podcast:list_podcast' %}">Kelola Podcast</a>
                 {% endif %}
-
+        
                 {% if user_type.is_artist or user_type.is_songwriter %}
-                    <a href="">Album & Songs</a>
+                    <a href="">Kelola Album & Songs</a>
                 {% endif %}
-
+        
                 {% if user_type.is_label %}
-                    <a href="">Album</a>
+                    <a href="">Kelola Album</a>
                 {% endif %}
-
+        
                 {% if user_type.is_artist or user_type.is_songwriter or user_type.is_label %}
-                    <a href="">Royalty</a>
+                    <a href="">Cek Royalti</a>
                 {% endif %}
-
+        
                 <a href="{% url 'authentication:logout' %}">Logout</a>
-
             {% else %}
                 <a href="{% url 'authentication:login' %}">Login</a>
                 <a href="{% url 'authentication:register_page' %}">Register</a>
-
             {% endif %}
         </nav>
     </div>

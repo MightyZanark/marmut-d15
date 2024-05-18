@@ -103,9 +103,9 @@
                 <button type="submit" class="action-button">Add to Playlist</button>
             </form>
             {% if request.session.user_type.is_premium %}
-                <a href="{% url 'download_song' song.id_song %}" class="action-button">Download</a>
+                <a href="{% url 'playlist:download_song' song.id_song %}" class="action-button">Download</a>
             {% endif %}
-            <a href="javascript:history.back()" class="action-button">Kembali</a>
+            <a href="" class="action-button">Kembali</a>
         </div> 
     </div>
 </div>

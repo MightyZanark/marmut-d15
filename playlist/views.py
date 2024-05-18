@@ -269,6 +269,23 @@ def submit_lagu_ke_playlist(request, id_song):
     return render(request, 'submit_lagu_ke_playlist.html', {'success': True, 'song_title': song_title, 'playlist_title': playlist_title, 'song_id': id_song, 'playlist_id': id_user_playlist})
 
 
+def download_song(request, id_song):
+    email_pemain = request.session['user_email'] 
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM downloaded_song WHERE id_song = %s AND email_downloader = %s", [id_song, email_pemain])
+        song_already_downloaded = cursor.fetchone()
+        if song_already_downloaded:
+            cursor.execute("SELECT judul FROM konten WHERE id = %s", [id_song])
+            song_title = cursor.fetchone()[0]
+            return render(request, 'sudah_download.html', {'song': {'judul': song_title}})
+        else:
+            cursor.execute("INSERT INTO downloaded_song (id_song, email_downloader) VALUES (%s, %s)", [id_song, email_pemain])
+            cursor.execute("UPDATE song SET total_download = total_download + 1 WHERE id_konten = %s", [id_song])
+            cursor.execute("SELECT judul FROM konten WHERE id = %s", [id_song])
+            song_title = cursor.fetchone()[0]
+            return render(request, 'sukses_download.html', {'song': {'judul': song_title}})
+
+
 
 def chart_list(request: HttpRequest):
     charts = get_charts()

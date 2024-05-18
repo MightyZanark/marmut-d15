@@ -16,6 +16,7 @@ urlpatterns = [
     path('song/<uuid:id_song>/main/', main_lagu, name='main_lagu'),
     path('song/<uuid:id_song>/lagu_ke_playlist/', lagu_ke_playlist, name='lagu_ke_playlist'),
     path('song/<uuid:id_song>/submit_lagu_ke_playlist/submit/', submit_lagu_ke_playlist, name='submit_lagu_ke_playlist'),
+    path('song/<uuid:id_song>/download/', download_song, name='download_song'),
     path('chart/', chart_list, name='chart_list'),
     path('chart/<str:chart_id>/', chart_detail, name='chart_detail'),
     path('', user_playlist, name = 'user_playlist'),

@@ -1,5 +1,7 @@
 from datetime import datetime, timezone
+from pyexpat.errors import messages
 from django.db import connection
+from django.http import HttpRequest
 from django.shortcuts import redirect, render
 import uuid
 from playlist.utils import get_charts, get_chart_type, get_chart_song
@@ -34,6 +36,10 @@ def detail_playlist(request, id_user_playlist):
         cursor.execute("SELECT * FROM user_playlist WHERE id_user_playlist = %s", [id_user_playlist])
         playlist = dictfetchall(cursor)[0]  
 
+    durasi_menit = playlist['total_durasi']
+    jam = durasi_menit // 60
+    menit = durasi_menit % 60
+
     if request.method == 'POST':
         if 'play' in request.POST:
             id_song = request.POST['play']
@@ -58,7 +64,12 @@ def detail_playlist(request, id_user_playlist):
         """, [playlist['id_playlist']])
         songs = dictfetchall(cursor)  
 
-    return render(request, 'detail_playlist.html', {'playlist': playlist, 'songs': songs})
+    for song in songs:
+        durasi_lagu = song['durasi']
+        song['jam_lagu'] = durasi_lagu // 60
+        song['menit_lagu'] = durasi_lagu % 60
+
+    return render(request, 'detail_playlist.html', {'playlist': playlist, 'songs': songs, 'jam': jam, 'menit': menit})
 
 
 def shuffle_play(request, id_user_playlist):
@@ -79,7 +90,7 @@ def shuffle_play(request, id_user_playlist):
             for song in songs:
                 cursor.execute("INSERT INTO akun_play_song (email_pemain, id_song, waktu) VALUES (%s, %s, %s)", [email_pemain, song[0], timestamp])
 
-        return redirect(reverse('detail_playlist', args=[id_user_playlist]))
+        return redirect(reverse('playlist:detail_playlist', args=[id_user_playlist]))
 
 
 def ubah_playlist(request, id_user_playlist):
@@ -210,7 +221,53 @@ def main_lagu(request, id_song):
                 cursor.execute("INSERT INTO akun_play_song (email_pemain, id_song, waktu) VALUES (%s, %s, %s)", [email_pemain, id_song, timestamp])
                 cursor.execute("UPDATE song SET total_play = total_play + 1 WHERE id_konten = %s", [id_song])
 
-    return redirect(reverse('detail_lagu', args=[id_song]))
+    return redirect(reverse('playlist:detail_lagu', args=[id_song]))
+
+
+def lagu_ke_playlist(request, id_song):
+    if not request.session.get('user_email'):
+        return redirect('login')
+
+    email = request.session['user_email']
+
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM user_playlist WHERE email_pembuat = %s", [email])
+        playlists = dictfetchall(cursor)
+
+    if not playlists:
+        messages.error(request, "Anda belum membuat playlist. Silakan buat playlist terlebih dahulu.")
+        return redirect('song_detail', id_song=id_song)
+
+    return render(request, 'lagu_ke_playlist.html', {'playlists': playlists, 'song_id': id_song})
+
+
+def submit_lagu_ke_playlist(request, id_song):
+    if not request.session.get('user_email'):
+        return redirect('login')
+
+    email = request.session['user_email']
+    id_user_playlist = request.POST['playlist']
+
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT id_playlist FROM user_playlist WHERE id_user_playlist = %s", [id_user_playlist])
+        id_playlist = cursor.fetchone()[0]
+
+        cursor.execute("SELECT * FROM playlist_song WHERE id_playlist = %s AND id_song = %s", [id_playlist, id_song])
+        if cursor.fetchone() is not None:
+            cursor.execute("SELECT judul FROM konten WHERE id = %s", [id_song])
+            song_title = cursor.fetchone()[0]
+            cursor.execute("SELECT judul FROM user_playlist WHERE id_user_playlist = %s", [id_user_playlist])
+            playlist_title = cursor.fetchone()[0]
+            return render(request, 'submit_lagu_ke_playlist.html', {'success': False, 'song_title': song_title, 'playlist_title': playlist_title, 'song_id': id_song, 'playlist_id': id_user_playlist})
+
+        cursor.execute("INSERT INTO playlist_song (id_playlist, id_song) VALUES (%s, %s)", [id_playlist, id_song])
+        cursor.execute("SELECT judul FROM konten WHERE id = %s", [id_song])
+        song_title = cursor.fetchone()[0]
+        cursor.execute("SELECT judul FROM user_playlist WHERE id_user_playlist = %s", [id_user_playlist])
+        playlist_title = cursor.fetchone()[0]
+
+    return render(request, 'submit_lagu_ke_playlist.html', {'success': True, 'song_title': song_title, 'playlist_title': playlist_title, 'song_id': id_song, 'playlist_id': id_user_playlist})
+
 
 
 def chart_list(request: HttpRequest):

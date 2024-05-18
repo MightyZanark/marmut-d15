@@ -74,12 +74,12 @@
         <p>Album: {{ song.album }}</p>
     </div>
 
-    <form method="POST" action="{% url 'detail_lagu' song.id_song %}">
+    <form method="POST" action="{% url 'playlist:detail_lagu' song.id_song %}">
         {% csrf_token %}
         <input type="range" class="slider" id="progressSlider" name="progress" min="0" max="100" value="0">
         <button type="submit" class="btn btn-primary" id="playButton">Play</button>
     </form>                    
-    <a href="" class="btn btn-secondary">Add to Playlist</a>
+    <a href="{% url 'playlist:lagu_ke_playlisy song.id_song %}" class="btn btn-secondary">Add to Playlist</a>
 </div>
 
 {% endblock %}

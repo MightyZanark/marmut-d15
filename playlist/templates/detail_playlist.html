@@ -44,6 +44,27 @@ Detail Playlist
         transition: background-color 0.3s;
     }
 
+    .action-buttons-container {
+        display: flex;
+        gap: 10px;
+    }
+
+    .action-buttons-container form {
+        margin: 0;
+    }
+
+    .action-button {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 5px;
+        background-color: darkgreen;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+
     .action-button:hover {
         background-color: #005700;
     }
@@ -52,7 +73,7 @@ Detail Playlist
         display: flex;
         flex-direction: column;
         align-items: center; 
-        gap: 10px; 
+        gap: 10px;
     }
 
     .content-container {
@@ -67,13 +88,13 @@ Detail Playlist
         <p><strong>Judul:</strong> {{ playlist.judul }}</p>
         <p><strong>Pembuat:</strong> {{ playlist.email_pembuat }}</p>
         <p><strong>Jumlah Lagu:</strong> {{ playlist.jumlah_lagu }}</p>
-        <p><strong>Total Durasi:</strong> {{ playlist.total_durasi }}</p>
+        <p><strong>Total Durasi:</strong> {{ jam }} jam {{ menit }} menit</p>
         <p><strong>Tanggal Dibuat:</strong> {{ playlist.tanggal_dibuat }}</p>
         <p><strong>Deskripsi:</strong> {{ playlist.deskripsi }}</p>
     </div>
     <div>
         <div class="button-container">
-            <form method="POST" action="">
+            <form method="POST" action="{% url 'playlist:shuffle_play' playlist.id_user_playlist %}">
                 {% csrf_token %}
                 <button type="submit" class="action-button">Shuffle Play</button>
             </form>
@@ -96,14 +117,19 @@ Detail Playlist
             <tr>
                 <td>{{ song.judul }}</td>
                 <td>{{ song.artist }}</td>
-                <td>{{ song.durasi }}</td>
+                <td>{{ song.jam_lagu }} jam {{ song.menit_lagu }} menit</td>
                 <td>
-                    <form method="POST" action="{% url 'playlist:detail_lagu' song.id_song %}">
-                        {% csrf_token %}
-                        <button type="submit" name="lihat" value="{{ song.id_song }}" class="action-button">Lihat</button>
-                        <button type="submit" name="play" value="{{ song.id_song }}" class="action-button">Play</button>
-                        <button type="submit" name="hapus" value="{{ song.id_song }}" class="action-button">Hapus</button>
-                    </form>
+                    <div class="action-buttons-container">
+                        <form method="POST" action="{% url 'playlist:detail_lagu' song.id_song %}">
+                            {% csrf_token %}
+                            <button type="submit" name="lihat" value="{{ song.id_song }}" class="action-button">Lihat</button>
+                        </form>
+                        <form method="POST" action="{% url 'playlist:detail_playlist' playlist.id_user_playlist %}">
+                            {% csrf_token %}
+                            <button type="submit" name="play" value="{{ song.id_song }}" class="action-button">Play</button>
+                            <button type="submit" name="delete" value="{{ song.id_song }}" class="action-button">Hapus</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             {% endfor %}

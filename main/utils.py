@@ -2,23 +2,31 @@ from django.db import connection
 
 def akun_dashboard(email):
     with connection.cursor() as cursor:
-        cursor.execute(f"""
-                       select akun.email, nama, gender, tempat_lahir, tanggal_lahir, kota_asal, premium.email as is_premium, podcaster.email as is_podcaster, artist.email_akun as is_artist, songwriter.email_akun as is_songwriter 
-                       from akun left join premium on akun.email = premium.email left join podcaster on akun.email = podcaster.email left join artist on akun.email = artist.email_akun left join songwriter on akun.email = songwriter.email_akun 
-                       where akun.email='{email}';
-                       """)
-        
-        email, nama, gender, tempat, tanggal, kota, prem, pod, art, sw = cursor.fetchone()
 
-        sw = "Songwriter" if sw else ""
-        art = "Artist" if art else ""
-        pod = "Podcaster" if pod else ""
+        nama = None
 
-        role = f"{art} {sw} {pod}"
-        prem = "Premium" if prem else "Nonpremium"
-        gender = "Laki-laki" if gender else "Perempuan"
+        if "@" not in email:
+            cursor.execute(f"select nama, email, kontak from label where id='{email}'")
+            nama,email,kontak = cursor.fetchone()
 
-        if email:
+        if not nama:
+
+            cursor.execute(f"""
+                        select akun.email, nama, gender, tempat_lahir, tanggal_lahir, kota_asal, premium.email as is_premium, podcaster.email as is_podcaster, artist.email_akun as is_artist, songwriter.email_akun as is_songwriter 
+                        from akun left join premium on akun.email = premium.email left join podcaster on akun.email = podcaster.email left join artist on akun.email = artist.email_akun left join songwriter on akun.email = songwriter.email_akun 
+                        where akun.email='{email}';
+                        """)
+            
+            email, nama, gender, tempat, tanggal, kota, prem, pod, art, sw = cursor.fetchone()
+
+            sw = "Songwriter" if sw else ""
+            art = "Artist" if art else ""
+            pod = "Podcaster" if pod else ""
+
+            role = f"{art} {sw} {pod}"
+            prem = "Premium" if prem else "Nonpremium"
+            gender = "Laki-laki" if gender else "Perempuan"
+
             data = {
                 "email": email,
                 "nama": nama,
@@ -31,8 +39,12 @@ def akun_dashboard(email):
             }
 
         else:
-            cursor.execute(f"select * from label where email = 'esevery2@senate.gov'")
-            print(cursor.fetchone())
+            data = {
+                "nama": nama,
+                "email": email,
+                "kontak": kontak,
+                "role": "Label"
+            }
     
         return data
     

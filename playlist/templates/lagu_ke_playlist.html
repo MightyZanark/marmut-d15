@@ -38,6 +38,8 @@ Tambah Lagu
         <form method="POST" action="{% url 'playlist:submit_lagu_ke_playlist' song_id %}">
             {% csrf_token %}
             <div class="form-group">
+                <p>Judul: {{ song.judul }}</p>
+                <p>Artist: {{ song.artist }}</p>
                 <label for="playlist">Select Playlist:</label>
                 <select class="form-control" id="playlist" name="playlist" required>
                     {% for playlist in playlists %}

@@ -209,7 +209,7 @@ def detail_lagu(request, id_song):
 
     song['genres'] = genres
     song['songwriters'] = songwriters
-
+    
     return render(request, 'main_lagu.html', {'song': song})
 
 
@@ -236,11 +236,22 @@ def lagu_ke_playlist(request, id_song):
         cursor.execute("SELECT * FROM user_playlist WHERE email_pembuat = %s", [email])
         playlists = dictfetchall(cursor)
 
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT k.judul, a.nama as artist, s.id_konten as id_song
+            FROM song s
+            JOIN konten k ON s.id_konten = k.id
+            JOIN artist ar ON s.id_artist = ar.id
+            JOIN akun a ON ar.email_akun = a.email
+            WHERE s.id_konten = %s
+        """, [id_song])
+        song = dictfetchall(cursor)[0]
+
     if not playlists:
         messages.error(request, "Anda belum membuat playlist. Silakan buat playlist terlebih dahulu.")
         return redirect('song_detail', id_song=id_song)
 
-    return render(request, 'lagu_ke_playlist.html', {'playlists': playlists, 'song_id': id_song})
+    return render(request, 'lagu_ke_playlist.html', {'playlists': playlists, 'song_id': id_song, 'song' : song})
 
 
 def submit_lagu_ke_playlist(request, id_song):
@@ -286,7 +297,6 @@ def download_song(request, id_song):
             cursor.execute("SELECT judul FROM konten WHERE id = %s", [id_song])
             song_title = cursor.fetchone()[0]
             return render(request, 'sukses_download.html', {'song': {'judul': song_title}})
-
 
 
 def chart_list(request: HttpRequest):

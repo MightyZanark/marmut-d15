@@ -3,23 +3,24 @@
 Dashboard
 {% endblock %}
 {% block content %}
-<div class="container mt-5 mb-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card mt-5">
-                <div class="card-header bg-success text-light text-center">
-                    <h3 class="card-title">Dashboard</h3>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Profile</h5>
+<style>
+    .centered-container {
+        text-align: center;
+        margin-top: 250px;
+    }
 
-                    <form method="POST" action="{% url 'authentication:logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-block mt-3">Logout</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    .centered-text {
+        font-size: 36px;
+        font-weight: bold;
+    }
+</style>
+<div class="centered-container">
+    <div class="centered-text">
+        Marmut - D15
     </div>
+    <div class="centered-text">
+        🎵🎧Listen to your music anytime, anywhere. With Marmut🎧🎵
+    </div>  
 </div>
+
 {% endblock %}

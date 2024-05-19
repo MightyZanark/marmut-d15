@@ -37,7 +37,7 @@ Tambah Lagu
     <form method="POST">
         {% csrf_token %}
         <div class="form-group mb-3">
-            <label for="song">Song:</label>
+            <label for="song">Lagu:</label>
             <select class="form-control" id="song" name="song">
                 {% for song in songs %}
                     <option value="{{ song.id_konten }}">{{ song.judul }} - {{ song.artist }}</option>

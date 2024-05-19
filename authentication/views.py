@@ -24,20 +24,18 @@ def register_pengguna(request: HttpRequest):
         songwriter = request.POST.get('songwriter', '')
 
         verified = False if not podcaster and not artist and not songwriter else True
-
         if not verified:
             success = create_unverified(email, password, nama, gender, tempat_lahir, tanggal_lahir, verified, kota_asal)
             if not success:
                 messages.info(request, f'Email {email} has already been used')
                 return render(request, 'register_pengguna.html', {})
-            
-            messages.info(request, 'Successfully registered!')
-            return render(request, 'register_pengguna.html', {})
+            return redirect(reverse("authentication:login"))
         
         success = create_verified(podcaster, artist, songwriter, email, password, nama, gender, tempat_lahir, tanggal_lahir, verified, kota_asal)
         if not success:
             messages.info(request, f'Email {email} has already been used')
             return render(request, 'register_pengguna.html', {})
+        return redirect(reverse("authentication:login"))
 
     return render(request, 'register_pengguna.html', {})
 
@@ -54,8 +52,7 @@ def register_label(request: HttpRequest):
             messages.info(request, f'Email {email} has already been used')
             return render(request, 'register_label.html', {})
         
-        messages.info(request, 'Successfully registered!')
-        return render(request, 'register_label.html', {})
+        return redirect(reverse("authentication:login"))
 
     return render(request, 'register_label.html', {})
 

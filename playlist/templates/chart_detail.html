@@ -33,10 +33,9 @@
                     <td>{{ song.1 }}</td>
                     <td>{{ song.2 }}</td>
                     <td>{{ song.3 }}</td>
-                    <td><a href="#"><button>Lihat</button></a></td>
+                    <td><a href="{% url 'playlist:detail_lagu' id_song=song.4 %}"><button>Lihat</button></a></td>
                 </tr>
             {% endfor %}
-            <!-- edit href pas song udh ada -->
         </table>
     </div>
 {% endblock content %}

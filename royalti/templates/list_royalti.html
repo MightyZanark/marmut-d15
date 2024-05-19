@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>List Royalti</title>
+{% endblock meta %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .table-container {
+        margin: 40px 0 10px 10px;
+    }
+
+    button {
+        display: block;
+        margin: 5px;
+    }
+</style>
+
+<div class="container">
+    <div class="table-container">
+        <h2>List Royalti</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Judul Lagu</th>
+                    <th>Judul Album</th>
+                    <th>Total Play</th>
+                    <th>Total Download</th>
+                    <th>Total Royalti Didapat</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for royalti in context %}
+                <tr>
+                    <td>{{royalti.lagu}}</td>
+                    <td>{{royalti.album}}</td>
+                    <td>{{royalti.play}}</td>
+                    <td>{{royalti.download}}</td>
+                    <td>{{royalti.total_royalti}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

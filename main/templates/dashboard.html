@@ -3,24 +3,131 @@
 Dashboard
 {% endblock %}
 {% block content %}
-<style>
-    .centered-container {
-        text-align: center;
-        margin-top: 250px;
-    }
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-header bg-success text-light text-center">
+                    <h3 class="card-title">Dashboard</h3>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Profile</h5>
+                    {% if user.user_info.role == 'Label' %}
+                            Nama: {{user.user_info.nama}} <br>
+                            Email: {{user.user_info.email}} <br>
+                            Kontak:  {{user.user_info.kontak}} <br>
+                            Role: {{user.user_info.role}} <br>
+                    {% else %}
+                            Nama: {{user.user_info.nama}} <br>
+                            Email: {{user.user_info.email}} <br>
+                            Status Langganan: {{user.user_info.prem}} <br>
+                            Kota Asal: {{user.user_info.kota}} <br>
+                            Gender: {{user.user_info.gender}} <br>
+                            Tempat Lahir: {{user.user_info.tempat}} <br>
+                            Tanggal: {{user.user_info.tanggal}} <br>
+                            Role: {{user.user_info.role}} <br>
+                    {% endif %}
 
-    .centered-text {
-        font-size: 36px;
-        font-weight: bold;
-    }
-</style>
-<div class="centered-container">
-    <div class="centered-text">
-        Marmut - D15
-    </div>
-    <div class="centered-text">
-        🎵🎧Listen to your music anytime, anywhere. With Marmut🎧🎵
-    </div>  
-</div>
+                    <form method="POST" action="{% url 'authentication:logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-block mt-3">Logout</button>
+                    </form>
+                </div>
+            </div>
+
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
+        
+                .table-container {
+                    margin: 40px 0 10px 10px;
+                }
+            </style>
+
+            <div class="table-container">
+                <h2>Daftar Playlist</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Judul</th>
+                            <th>Deskripsi</th>
+                            <th>Total Lagu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for playlist in user.playlist %}
+                        <tr>
+                            <td>{{playlist.judul}}</td>
+                            <td>{{playlist.desc}}</td>
+                            <td>{{playlist.jml_lagu}}</td>
+                        <tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <br>
+
+            {% if user.user_type.is_songwriter %}
+            <div class="table-container">
+                <h2>Daftar Lagu</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Judul</th>
+                            <th>Tanggal Rilis</th>
+                            <th>Durasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lagu in user.lagu %}
+                        <tr>
+                            <td>{{lagu.judul}}</td>
+                            <td>{{lagu.tanggal}}</td>
+                            <td>{{lagu.durasi}}</td>
+                        <tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            {% endif %}
+
+            {% if user.user_type.is_podcaster %}
+            <div class="table-container">
+                <h2>Daftar Poadcast</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Judul</th>
+                            <th>Tanggal Rilis</th>
+                            <th>Durasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for podcast in user.podcast %}
+                        <tr>
+                            <td>{{podcast.judul}}</td>
+                            <td>{{podcast.tanggal}}</td>
+                            <td>{{podcast.durasi}}</td>
+                        <tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            {% endif %}
+
+
+        </div>
 
 {% endblock %}

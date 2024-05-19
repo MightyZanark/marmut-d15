@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Album List</title>
+{% endblock meta %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .table-container {
+        margin: 40px 0 10px 10px;
+    }
+
+    button {
+        display: block;
+        margin: 5px;
+    }
+
+</style>
+<div class="container">
+    <div class="table-container">
+        <h2>List Album</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    {% if album.is_label == False %}<th>Label</th>{% endif %}
+                    <th>Jumlah Lagu</th>
+                    <th>Total Durasi</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for album in list_album %}
+                <tr>
+                    <td>{{album.judul}}</td>
+                    {% if album.is_label == False %}<td>{{album.label}}</td> {% endif %}
+                    <td>{{album.jumlah}}</td>
+                    <td>{{album.durasi}}</td>
+                    <td>
+                        <a href="{% url 'album:detail_album' album_id=album.id %}"><button>Lihat Daftar Lagu</button></a>
+                        {% if album.is_label == False %}<a href="{% url 'album:create_song' album_id=album.id %}"><button>Tambah Lagu</button></a>{% endif %}
+                        <a href="{% url 'album:delete_album' album_id=album.id %}"><button>Hapus</button></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if album.is_label == False %}<a href="{% url 'album:create_album'%}"><button>Tambah Album</button></a>{% endif %}
+</div>
+{% endblock content %}

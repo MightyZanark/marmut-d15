@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'podcast',
     'song',
     'playlist',
+    'album',
+    'royalti'
 ]
 
 MIDDLEWARE = [
@@ -78,27 +80,27 @@ WSGI_APPLICATION = 'marmut.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'marmut',
-#         'USER': 'postgres',
-#         'PASSWORD': 'my-password',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.aqokqffqhzmumewffkim',
-        'PASSWORD': 'marmutd15basdat',
-        'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
+        'NAME': 'marmut2',
+        'USER': 'postgres',
+        'PASSWORD': 'plsletme1n',
+        'HOST': 'localhost',
         'PORT': '5432'
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres.aqokqffqhzmumewffkim',
+#         'PASSWORD': 'marmutd15basdat',
+#         'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
+#         'PORT': '5432'
+#     }
+# }
 
 
 # Password validation

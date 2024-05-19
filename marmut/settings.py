@@ -83,25 +83,13 @@ WSGI_APPLICATION = 'marmut.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'marmut2',
-        'USER': 'postgres',
-        'PASSWORD': 'plsletme1n',
-        'HOST': 'localhost',
+        'NAME': 'postgres',
+        'USER': 'postgres.aqokqffqhzmumewffkim',
+        'PASSWORD': 'marmutd15basdat',
+        'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
         'PORT': '5432'
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'postgres.aqokqffqhzmumewffkim',
-#         'PASSWORD': 'marmutd15basdat',
-#         'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
-#         'PORT': '5432'
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

@@ -209,7 +209,7 @@ def detail_lagu(request, id_song):
 
     song['genres'] = genres
     song['songwriters'] = songwriters
-
+    
     return render(request, 'main_lagu.html', {'song': song})
 
 
@@ -297,7 +297,6 @@ def download_song(request, id_song):
             cursor.execute("SELECT judul FROM konten WHERE id = %s", [id_song])
             song_title = cursor.fetchone()[0]
             return render(request, 'sukses_download.html', {'song': {'judul': song_title}})
-
 
 
 def chart_list(request: HttpRequest):

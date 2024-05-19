@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Create album</title>
+{% endblock meta %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: Arial;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .container {
+        max-width: 400px;
+        margin: 20px auto;
+    }
+    
+    .form {
+        margin-bottom: 20px;
+    }
+    
+</style>
+
+<div class="container">
+    <h2>Create Album</h2>
+    <form method="POST">
+        <div class="form">
+            {% csrf_token %}
+            <label for="judul_album">Judul: </label>
+            <input type="text" name="judul_album" />
+        </div>
+        <div class="form">
+            <label for="label">Label: </label>
+            <select style="margin-top: 5px; margin-bottom: 20px;" name="label">
+                {% for label in context.label_list %}
+                <option value="{{label.id}}">{{label.nama}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <h2>Lagu Pertama</h2>
+        <label for="judul_lagu">Judul: </label>
+        <input type="text" name="judul_lagu" />
+        <br>
+        <label for="artist">Artist: </label>
+        <select style="margin-top: 5px; margin-bottom: 20px;" name="artist">
+            {% for artist in context.artist_list %}
+            <option value="{{artist.email}}">{{artist.nama}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label style="font-weight: bold">Songwriter: </label>
+        {% for sw in context.songwriter_list %}
+        <input type="checkbox" name="songwriter" value="{{sw.email}}" {% if sw.nama == context.akun_name %} disabled checked {% endif %}>
+        <label for="{{sw.nama}}"> {{sw.nama}}</label>
+        {% endfor %}
+        <br>
+        <label style="font-weight: bold">Genre: </label>
+        {% for genre in context.genre_list %}
+        <input type="checkbox" name="genre" value="{{genre}}" >
+        <label for={{genre}}> {{genre}}</label>
+        {% endfor %}
+        <br>
+        <label for="durasi">Durasi: </label>
+        <input type="text" name="durasi" />
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+{% endblock content %}

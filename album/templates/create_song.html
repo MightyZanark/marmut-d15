@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Create Song</title>
+{% endblock meta %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: Arial;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: 20px auto;
+    }
+
+    input {
+        margin-bottom: 30px;
+    }
+
+    select {
+        display: block;
+    }
+    
+</style>
+
+<div class="container">
+    <h2>Create Song</h2>
+    <p>Album: {{context.album_name}}</p>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="judul">Judul: </label>
+        <input type="text" name="judul" />
+        <br>
+        <label for="artist">Artist: </label>
+        <select style="margin-top: 5px; margin-bottom: 20px;" name="artist">
+            {% for artist in context.artist_list %}
+            <option value="{{artist.email}}">{{artist.nama}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label style="font-weight: bold">Songwriter: </label>
+        {% for sw in context.songwriter_list %}
+        <input type="checkbox" name="songwriter" value="{{sw.email}}" {% if sw.nama == context.akun_name %} disabled checked {% endif %}>
+        <label for="{{sw.nama}}"> {{sw.nama}}</label>
+        {% endfor %}
+        <br>
+        <label style="font-weight: bold">Genre: </label>
+        {% for genre in context.genre_list %}
+        <input type="checkbox" name="genre" value="{{genre}}" >
+        <label for={{genre}}> {{genre}}</label>
+        {% endfor %}
+        <br>
+        <label for="durasi">Durasi: </label>
+        <input type="text" name="durasi" />
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+{% endblock content %}

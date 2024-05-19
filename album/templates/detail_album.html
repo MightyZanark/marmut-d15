@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Album Detail</title>
+{% endblock meta %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .table-container {
+        margin: 40px 0 10px 10px;
+    }
+
+    button {
+        display: block;
+        margin: 5px;
+    }
+
+</style>
+<div class="container">
+    <div class="table-container">
+        <h2>Daftar Lagu pada Album {{list_album_lagu.0.judul_album}}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    <th>Durasi</th>
+                    <th>Total Play</th>
+                    <th>Total Download</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lagu in list_album_lagu %}
+                <tr>
+                    <td>{{lagu.judul}}</td>
+                    <td>{{lagu.durasi}}</td>
+                    <td>{{lagu.play}}</td>
+                    <td>{{lagu.download}}</td>
+                    <td>
+                        <button>Lihat Detail</button>
+                        <a href="{% url 'album:delete_song' album_id=list_album_lagu.0.album_id song_id=lagu.konten_id %}"><button>Hapus</button></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

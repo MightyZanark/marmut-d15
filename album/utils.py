@@ -28,11 +28,15 @@ def is_songwriter(email):
     
 def is_label(email):
     with connection.cursor() as cursor:
-        cursor.execute(
-            "SELECT EXISTS (SELECT * FROM label WHERE id = %s)",
-            [email]
-        )
-        return cursor.fetchone()[0]
+        data = None
+        
+        if "@" not in email:
+            cursor.execute(
+                "SELECT EXISTS (SELECT * FROM label WHERE id = %s)",
+                [email]
+            )
+            data = cursor.fetchone()[0]
+        return data
     
 def get_album(email, is_artist, is_label):
     with connection.cursor() as cursor:

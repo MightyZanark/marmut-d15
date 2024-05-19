@@ -26,13 +26,24 @@ def is_songwriter(email):
         )
         return cursor.fetchone()[0]
     
-def get_album(email, is_artist):
+def is_label(email):
     with connection.cursor() as cursor:
-        if is_artist:
-            print("halo2")
-            cursor.execute(f"select distinct album.id, judul, label.nama as nama_label, jumlah_lagu, total_durasi from artist, song, label, album where artist.email_akun = '{email}' and song.id_artist = artist.id and album.id = song.id_album and album.id_label = label.id;")
+        cursor.execute(
+            "SELECT EXISTS (SELECT * FROM label WHERE id = %s)",
+            [email]
+        )
+        return cursor.fetchone()[0]
+    
+def get_album(email, is_artist, is_label):
+    with connection.cursor() as cursor:
+
+        if is_label:
+            cursor.execute(f"select distinct album.id, judul, label.nama, jumlah_lagu, total_durasi from label, album where label.id='{email}' and album.id_label = label.id")
         else:
-            cursor.execute(f"select distinct album.id, album.judul, label.nama as nama_label, jumlah_lagu, total_durasi from songwriter as sw, song as s, songwriter_write_song as sws, album, label where sw.email_akun = '{email}' and sws.id_songwriter = sw.id and sws.id_song = s.id_konten and s.id_album = album.id and album.id_label = label.id;")
+            if is_artist:
+                cursor.execute(f"select distinct album.id, judul, label.nama as nama_label, jumlah_lagu, total_durasi from artist, song, label, album where artist.email_akun = '{email}' and song.id_artist = artist.id and album.id = song.id_album and album.id_label = label.id;")
+            else:
+                cursor.execute(f"select distinct album.id, album.judul, label.nama as nama_label, jumlah_lagu, total_durasi from songwriter as sw, song as s, songwriter_write_song as sws, album, label where sw.email_akun = '{email}' and sws.id_songwriter = sw.id and sws.id_song = s.id_konten and s.id_album = album.id and album.id_label = label.id;")
 
         data = cursor.fetchall()
 
@@ -46,7 +57,8 @@ def get_album(email, is_artist):
                 "judul": judul,
                 "label": label,
                 "jumlah": jumlah,
-                "durasi": durasi
+                "durasi": durasi,
+                "is_label": is_label
             }
             daftar_album.append(album)
 

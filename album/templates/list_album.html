@@ -50,7 +50,7 @@
             <thead>
                 <tr>
                     <th>Judul</th>
-                    <th>Label</th>
+                    {% if album.is_label == False %}<th>Label</th>{% endif %}
                     <th>Jumlah Lagu</th>
                     <th>Total Durasi</th>
                     <th>Action</th>
@@ -60,12 +60,12 @@
                 {% for album in list_album %}
                 <tr>
                     <td>{{album.judul}}</td>
-                    <td>{{album.label}}</td>
+                    {% if album.is_label == False %}<td>{{album.label}}</td> {% endif %}
                     <td>{{album.jumlah}}</td>
                     <td>{{album.durasi}}</td>
                     <td>
                         <a href="{% url 'album:detail_album' album_id=album.id %}"><button>Lihat Daftar Lagu</button></a>
-                        <a href="{% url 'album:create_song' album_id=album.id %}"><button>Tambah Lagu</button></a>
+                        {% if album.is_label == False %}<a href="{% url 'album:create_song' album_id=album.id %}"><button>Tambah Lagu</button></a>{% endif %}
                         <a href="{% url 'album:delete_album' album_id=album.id %}"><button>Hapus</button></a>
                     </td>
                 </tr>
@@ -73,6 +73,6 @@
             </tbody>
         </table>
     </div>
-    <a href="{% url 'album:create_album'%}"><button>Tambah Album</button></a>
+    {% if album.is_label == False %}<a href="{% url 'album:create_album'%}"><button>Tambah Album</button></a>{% endif %}
 </div>
 {% endblock content %}

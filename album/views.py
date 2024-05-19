@@ -6,18 +6,18 @@ from .utils import *
 def list_album(request):
     email = request.session.get('user_email', None)
 
-    if not email or not is_artist(email) and not is_songwriter(email):
-        return HttpResponseForbidden("You are not a songwriter/artist")
+    if not email or not is_artist(email) and not is_songwriter(email) and not is_label(email):
+        return HttpResponseForbidden("You are not a songwriter/artist/label")
 
-    context = get_album(email, is_artist(email))
+    context = get_album(email, is_artist(email), is_label(email))
 
     return render(request, 'list_album.html', {"list_album": context})
 
 def detail_album(request, album_id):
     email = request.session.get('user_email', None)
 
-    if not email or not is_artist(email) and not is_songwriter(email):
-        return HttpResponseForbidden("You are not a songwriter/artist")
+    if not email or not is_artist(email) and not is_songwriter(email) and not is_label(email):
+        return HttpResponseForbidden("You are not a songwriter/artist/label")
     
     context = get_album_detail(album_id)
 
@@ -69,7 +69,7 @@ def create_song(request, album_id):
 def delete_song(request, album_id, song_id):
     email = request.session.get('user_email', None)
 
-    if not email or not is_artist(email) and not is_songwriter(email):
+    if not email or not is_artist(email) and not is_songwriter(email) and not is_label(email):
         return HttpResponseForbidden("You are not a songwriter/artist")
     
     delete_song_db(song_id)
@@ -138,7 +138,7 @@ def create_album(request):
 def delete_album(request, album_id):
     email = request.session.get('user_email', None)
 
-    if not email or not is_artist(email) and not is_songwriter(email):
+    if not email or not is_artist(email) and not is_songwriter(email) and not is_label(email):
         return HttpResponseForbidden("You are not a songwriter/artist")
     
     delete_album_db(album_id)

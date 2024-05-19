@@ -115,7 +115,7 @@
                     {% if request.session.user_type.is_artist or request.session.user_type.is_songwriter or request.session.user_type.is_label %}
                         <!-- Navbar for artists, songwriters, and labels -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="">Royalty</a>
+                            <a class="nav-link text-white" href="{% url 'royalti:list_royalti' %}">Royalty</a>
                         </li>
                     {% endif %}
                     <li class="nav-item">

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'song',
     'playlist',
     'album',
+    'royalti'
 ]
 
 MIDDLEWARE = [

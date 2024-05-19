@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Chart List</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="m-3">
+    <div>
+        <h1>Chart List</h1>
+    </div>
+    <br>
+    <table class="table table-bordered">
+        <tr>
+            <th>Tipe</th>
+            <th>Actions</th>
+        </tr>
+        {% for chart in charts %}
+        <tr>
+            <td>{{ chart.0 }}</td>
+            <td><a href="{% url 'playlist:chart_detail' chart_id=chart.1 %}"><button>Lihat Daftar Lagu</button></a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a><button>Kembali</button></a>
+</div>
+{% endblock content %}

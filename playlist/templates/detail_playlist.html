@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detail Playlist
+{% endblock %}
+
+{% block content %}
+<style>
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    .playlist-info {
+        margin-bottom: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .song-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #555;
+    }
+
+    .action-button {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 5px;
+        background-color: darkgreen;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .action-buttons-container {
+        display: flex;
+        gap: 10px;
+    }
+
+    .action-buttons-container form {
+        margin: 0;
+    }
+
+    .action-button {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 5px;
+        background-color: darkgreen;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+
+    .action-button:hover {
+        background-color: #005700;
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        gap: 10px;
+    }
+
+    .content-container {
+        text-align: center;
+    }
+</style>
+
+<div class="content-container">
+    <h2>{{ playlist.judul }}</h2>
+    <div style="text-align:left" class="playlist-info">
+        <p><strong>Judul:</strong> {{ playlist.judul }}</p>
+        <p><strong>Pembuat:</strong> {{ playlist.email_pembuat }}</p>
+        <p><strong>Jumlah Lagu:</strong> {{ playlist.jumlah_lagu }}</p>
+        <p><strong>Total Durasi:</strong> {{ jam }} jam {{ menit }} menit</p>
+        <p><strong>Tanggal Dibuat:</strong> {{ playlist.tanggal_dibuat }}</p>
+        <p><strong>Deskripsi:</strong> {{ playlist.deskripsi }}</p>
+    </div>
+    <div>
+        <div class="button-container">
+            <form method="POST" action="{% url 'playlist:shuffle_play' playlist.id_user_playlist %}">
+                {% csrf_token %}
+                <button type="submit" class="action-button">Shuffle Play</button>
+            </form>
+            <a href="{% url 'playlist:playlist' %}" class="action-button">Kembali</a>
+        </div>
+        
+    </div>
+    <h3 style="margin-top: 20px;">DAFTAR LAGU</h3>
+    <table class="song-table">
+        <thead>
+            <tr>
+                <th>Judul Lagu</th>
+                <th>Oleh</th>
+                <th>Durasi</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in songs %}
+            <tr>
+                <td>{{ song.judul }}</td>
+                <td>{{ song.artist }}</td>
+                <td>{{ song.jam_lagu }} jam {{ song.menit_lagu }} menit</td>
+                <td>
+                    <div class="action-buttons-container">
+                        <form method="POST" action="{% url 'playlist:detail_lagu' song.id_song %}">
+                            {% csrf_token %}
+                            <button type="submit" name="lihat" value="{{ song.id_song }}" class="action-button">Lihat</button>
+                        </form>
+                        <form method="POST" action="{% url 'playlist:detail_playlist' playlist.id_user_playlist %}">
+                            {% csrf_token %}
+                            <button type="submit" name="play" value="{{ song.id_song }}" class="action-button">Play</button>
+                            <button type="submit" name="delete" value="{{ song.id_song }}" class="action-button">Hapus</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <a class="action-button" href="{% url 'playlist:tambah_lagu' playlist.id_user_playlist %}" role="button">Tambah Lagu</a>
+    </div>
+
+</div>
+
+{% endblock %}

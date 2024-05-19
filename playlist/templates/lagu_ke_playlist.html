@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Tambah Lagu
+{% endblock %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 400px;
+        margin: 100px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .btn-custom {
+        background-color: darkgreen;
+        color: #fff;
+    }
+
+    .btn-center {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <h2>Add Song to User Playlist</h2>
+    <div class="card-body">
+        <form method="POST" action="{% url 'playlist:submit_lagu_ke_playlist' song_id %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <p>Judul: {{ song.judul }}</p>
+                <p>Artist: {{ song.artist }}</p>
+                <label for="playlist">Select Playlist:</label>
+                <select class="form-control" id="playlist" name="playlist" required>
+                    {% for playlist in playlists %}
+                        <option value="{{ playlist.id_user_playlist }}">{{ playlist.judul }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Tambah</button>
+            <a href="{% url 'playlist:detail_lagu' song_id %}" class="btn btn-custom btn-block">Kembali</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

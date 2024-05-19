@@ -100,10 +100,13 @@ def login(request):
             cursor.execute("SELECT * FROM akun WHERE email = %s AND password = %s", [email, password])
             user = cursor.fetchone()
 
+            if user is None:
+                cursor.execute("SELECT * FROM label WHERE email = %s AND password = %s", [email, password])
+                user = cursor.fetchone()
+
             if user is not None:
-                request.session['user_email'] = user[0]
+                request.session['user_email'] = str(user[0])
                 request.session['user_type'] = determine_user_type(email, cursor)
-                print("test")
                 return redirect('main:dashboard')
             else:
                 messages.error(request, 'Email or password is incorrect!')

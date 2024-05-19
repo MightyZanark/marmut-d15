@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        text-align: center;
+        padding: 20px;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    .btn-custom {
+        background-color: darkgreen;
+        color: #fff;
+    }
+
+    .btn-center {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <h2>Download Failed</h2>
+    <div class="card-body">
+        <p>Lagu dengan judul {{ song.judul }} sudah pernah di unduh!</p>
+        <a href="javascript:history.back()" class="btn btn-custom btn-block">Playlist</a>
+        <a href="javascript:history.back()" class="btn btn-custom btn-block">Back</a>
+    </div>
+</div>
+{% endblock %}
